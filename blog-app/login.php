@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user'] = $user["name"];
-        header("Location: dashboard.php");
+        header("Location: index.php");
         exit();
     } else {
         $msg = "Invalid email or password!";
