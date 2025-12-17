@@ -2,24 +2,38 @@ import { Link } from "react-router-dom";
 import api from "../api/axios";
 
 const BlogCard = ({ post, refresh }) => {
+console.log(post);
 
-  const remove = async () => {
-    if (!confirm("Delete this blog?")) return;
-    try {
-      const fd = new FormData();
-      fd.append("id", post.id);
-      await api.post("posts/delete_post.php", fd);
-      refresh(); // reload posts after deletion
-    } catch (err) {
-      alert("Failed to delete post");
+ const deletePost = async (id) => {
+  try {
+    console.log("Deleting post", id);
+
+    const res = await api.delete("posts/delete_post.php", {
+      data: { id }, // must be inside `data`    
+    });
+
+    console.log(res.data); // debug response
+
+    if (res.data.success) {
+      alert("Post deleted successfully");
+      refresh(); // refresh posts list in parent
+    } else {
+      alert(res.data.error);
     }
-  };
+  } catch (err) {
+    console.error(err.response?.data || err);
+    alert(err.response?.data?.error || "Something went wrong");
+  }
+};
+
+
+
 
   return (
     <div className="bg-white rounded-lg shadow hover:shadow-lg transition">
       {post.image && (
         <img
-          src={`http://localhost/blog-app/uploads/${post.image}`}
+          src={`http://localhost/PHP/blog-api/backend/uploads/${post.image}`}
           className="w-full h-48 object-cover rounded-t-lg"
         />
       )}
@@ -37,7 +51,7 @@ const BlogCard = ({ post, refresh }) => {
           Edit
         </Link>
         <button
-          onClick={remove}
+          onClick={() => deletePost(post.id)}
           className="text-red-600 hover:underline"
         >
           Delete
