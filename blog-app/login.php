@@ -28,7 +28,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
     <title>Login</title>
+
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 
@@ -46,19 +51,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="email" name="email" required class="form-control">
             </div>
 
+            <!-- Password with Eye -->
             <div class="mb-3">
                 <label>Password</label>
-                <input type="password" name="password" required class="form-control">
+                <div class="input-group">
+                    <input type="password" name="password" id="password" required class="form-control">
+                    <span class="input-group-text" style="cursor:pointer" onclick="togglePassword()">
+                        <i id="eyeIcon" class="bi bi-eye"></i>
+                    </span>
+                </div>
             </div>
 
             <button class="btn btn-success w-100">Login</button>
         </form>
 
-        <p class="text-center mt-3">Don't have an account?
-            <a href="register.php">Register</a>
+        <p class="text-center mt-3">
+            Don't have an account? <a href="register.php">Register</a>
         </p>
     </div>
 </div>
+
+<!-- Show / Hide Password Script -->
+<script>
+function togglePassword() {
+    const password = document.getElementById("password");
+    const icon = document.getElementById("eyeIcon");
+
+    if (password.type === "password") {
+        password.type = "text";
+        icon.classList.replace("bi-eye", "bi-eye-slash");
+    } else {
+        password.type = "password";
+        icon.classList.replace("bi-eye-slash", "bi-eye");
+    }
+}
+</script>
 
 </body>
 </html>

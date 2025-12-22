@@ -33,24 +33,39 @@ if (!isset($_SESSION['user'])) {
         if ($result->num_rows > 0):
             while ($row = $result->fetch_assoc()):
         ?>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <?php if (!empty($row['image'])): ?>
-                        <img src="uploads/<?php echo htmlspecialchars($row['image']); ?>" 
-                             class="card-img-top" style="height:200px; object-fit:cover;">
-                    <?php endif; ?>
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo htmlspecialchars($row['title']); ?></h5>
-                        <p class="card-text">
-                            <?php echo nl2br(htmlspecialchars(substr($row['content'], 0, 100))) . '...'; ?>
-                        </p>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between">
-                        <a href="edit_post.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-sm">Edit</a>
-                        <a href="delete_post.php?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this post?');">Delete</a>
-                    </div>
-                </div>
+           <div class="col-md-4 mb-4">
+    <div class="card h-100 shadow-sm">
+
+        <a href="view_post.php?id=<?php echo $row['id']; ?>" class="text-decoration-none text-dark">
+
+            <?php if (!empty($row['image'])): ?>
+                <img src="uploads/<?php echo htmlspecialchars($row['image']); ?>" 
+                     class="card-img-top" style="height:200px; object-fit:cover;">
+            <?php endif; ?>
+
+            <div class="card-body">
+                <h5 class="card-title">
+                    <?php echo htmlspecialchars($row['title']); ?>
+                </h5>
+
+                <p class="card-text">
+                    <?php echo nl2br(htmlspecialchars(substr($row['content'], 0, 100))) . '...'; ?>
+                </p>
             </div>
+
+        </a>
+
+        <!-- <div class="card-footer d-flex justify-content-between">
+            <a href="edit_post.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-sm">Edit</a>
+            <a href="delete_post.php?id=<?php echo $row['id']; ?>" 
+               class="btn btn-danger btn-sm"
+               onclick="return confirm('Are you sure you want to delete this post?');">
+               Delete
+            </a>
+        </div> -->
+    </div>
+</div>
+
         <?php
             endwhile;
         else:

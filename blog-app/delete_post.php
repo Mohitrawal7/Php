@@ -1,7 +1,7 @@
 <?php
 require 'db.php';
 
-if(!isset($_GET['id'])){
+if(!isset($_GET['id']) || !is_numeric($_GET['id'])){
     header("Location: index.php");
     exit();
 }
@@ -25,5 +25,6 @@ $del = $conn->prepare("DELETE FROM posts WHERE id=?");
 $del->bind_param("i", $id);
 $del->execute();
 
+// Redirect back to dashboard after delete
 header("Location: index.php");
 exit();
